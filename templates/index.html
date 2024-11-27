@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block body %}
+<form method=POST action="{{ url_for('login') }}"
+    style="display: flex; flex-direction: column; align-items: center; width: 100%">
+    <div class="form-group" style="width: 40%;">
+        <label for="exampleInputEmail1" style="color:deepskyblue">Username</label>
+        <input type="text" class="form-control" name="username" placeholder="Username" style="font-size:large">
+    </div>
+    <br />
+    <div class="form-group" style="width: 40%;">
+        <label for="exampleInputPassword1" style="color:deepskyblue">Password</label>
+        <input type="password" class="form-control" name="pass" placeholder="Password" style="font-size:large">
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary btn-block" style="width: 40%">
+        <span style="font-size: large;">
+            Log In
+        </span>
+    </button>
+</form>
+<br>
+<div>
+    <span style="color:#04b4aa">Don't have an account? </span>
+    <a href="{{ url_for('register') }}">Sign up here</a>.
+</div>
+{% endblock %}

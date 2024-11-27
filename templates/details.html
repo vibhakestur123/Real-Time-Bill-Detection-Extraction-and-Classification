@@ -1,0 +1,28 @@
+{% extends "layout2.html" %}
+{% block body %}
+<div class="container" style="width:100%">
+    <table id="table" data-toggle="table" data-filter-control="true" data-sortable="true" classes="table-lg"
+        data-pagination="true" data-show-columns="true" data-show-columns-toggle-all="true" class="table">
+        <thead>
+            <tr>
+                <th data-field="date" data-filter-control="input" scope="col" data-sortable="true">Date</th>
+                <th scope="col" data-field="item_name" data-filter-control="input" data-sortable="true">Item Name</th>
+                <th scope="col" data-field="category" data-filter-control="select" data-sortable="true">Category</th>
+                <th scope="col" data-field="quantity" data-sortable="true">Quantity</th>
+                <th scope="col" data-field="price" data-sortable="true">Price</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in content %}
+            <tr>
+                <th scope="row">{{row['date']}}</th>
+                <td style="word-break:break-all;">{{row['item_name']}}</td>
+                <td>{{row['category']}}</td>
+                <td>{{row['quantity']}}</td>
+                <td>{{row['price']}}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

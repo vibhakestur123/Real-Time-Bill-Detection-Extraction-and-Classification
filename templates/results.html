@@ -1,0 +1,132 @@
+{% extends "layout2.html" %}
+{% block body %}
+<div style="font-size: 32px; margin-top: 32px;">
+    Hii {{username}}, You have spent Rs. {{ content['total'] }}
+</div>
+<div class="content" style="display: flex; align-items: center; justify-content: center;">
+    <div style="margin: 20px; flex: 1;">
+        <div class="card h-100" style="background-color: rgb(233,236,239);">
+            <div style="height: 75%;">
+                <img src="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img/https://listonic.com/wp-content/uploads/2018/12/grocery-bag-1-3.png"
+                    class="card-img-top" style="height: 320px;" />
+            </div>
+
+            <div class="card-footer">
+                <small class="text-muted">
+                    <b>You have spent Rs. {{content['edibles']}} on Groceries which is
+                        {{content['ediblesPercentage']}}% of the Total Expenditure.</b>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 20px; flex: 1;">
+        <div class="card h-100" style="background-color: rgb(233,236,239);">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRx41S8ld5GuRHK3ne_EsQ-zafnQHVH78YajYHXxHPtcxID1tp-2FtB_VWVNy9vjhZ0VBk&usqp=CAU"
+                class="card-img-top" style="height: 320px;" />
+            <div class="card-footer">
+                <small class="text-muted">
+                    <b>You have spent Rs. {{content['stationery']}} on Essentials which is
+                        {{content['stationeryPercentage']}}% of the Total Expenditure.</b>
+                </small>
+            </div>
+        </div>
+    </div>
+    <div style="margin: 20px; flex: 1;">
+        <div class="card h-100" style="background-color: rgb(233,236,239);">
+            <img src="https://media.istockphoto.com/id/842463840/vector/skin-care-icons.jpg?s=612x612&w=0&k=20&c=2TfPrphjHFB0YGL4gK4bIyOZc1hZU6DFRwixpw2Cwjg="
+                class="card-img-top" style="height: 320px;" />
+            <div class="card-footer">
+                <small class="text-muted">
+                    <b>You have spent Rs. {{content['personalCare']}} on Beauty Products which is
+                        {{content['personalCarePercentage']}} of the Total Expenditure%.</b>
+                </small>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="display: flex; flex-direction: row;">
+    <div id="my_dataviz"></div>
+    <div id="my_dataviz2"></div>
+</div>
+<button class="btn btn-primary" style="margin-bottom: 20px;" onclick="window.print()">Generate Report</button>
+<script>
+    function generatePDF() {
+        var opt = {
+            margin: 0,
+            filename: 'time_sheet_report.pdf',
+            image: { type: 'jpeg', quality: 0.20 },
+            html2canvas: { scale: 2, useCORS: true },
+            jsPDF: { unit: 'in', format: 'a4', orientation: 'p' }
+        };
+        var element = document.getElementById('body');
+        html2pdf(document.body).set(opt).save();
+    }
+</script>
+<script>
+    google.charts.load('current', { 'packages': ['corechart'] });
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Category');
+        data.addColumn('number', 'Percentage');
+        // data.addRows([
+        //     ["Groceries", {{content['ediblesPercentage']}}],
+        //     ["Essentials", {{content['stationeryPercentage']}}],
+        //     ["Beauty Products", {{content['personalCarePercentage']}}],
+        // ]);
+        data.addRows([
+            ["Groceries", {{content['ediblesPercentage']}}],
+            ["Essentials", {{content['stationeryPercentage']}}],
+            ["Beauty Products", {{content['personalCarePercentage']}}],
+        ]);
+        var options = {
+            'title': 'Pie chart',
+            'width': 600,
+            'height': 500
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('my_dataviz'));
+        chart.draw(data, options);
+    }
+</script>
+<script>
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart2);
+    function drawChart2() {
+        var data = google.visualization.arrayToDataTable([
+            ["Element", "Density", { role: "style" } ],
+            ["Groceries", {{content['ediblesPercentage']}}, "#3366cc"],
+            ["Essentials", {{content['stationeryPercentage']}}, "#dc3912"],
+            ["Beauty Products", {{content['personalCarePercentage']}}, "#ff9900"],
+        ]);
+        // var data = google.visualization.arrayToDataTable([
+        //     ["Element", "Density", { role: "style" } ],
+        //     ["Groceries", {{content['ediblesPercentage']}}, "#3366cc"],
+        //     ["Essentials", {{content['stationeryPercentage']}}, "#dc3912"],
+        //     ["Beauty Products", {{content['personalCarePercentage']}}, "#ff9900"],
+        // ]);
+        var view = new google.visualization.DataView(data);
+        view.setColumns([
+            0, 1,
+            {
+                calc: "stringify",
+                sourceColumn: 1,
+                type: "string",
+                role: "annotation",
+            },
+            2
+        ]);
+
+        var options = {
+            title: "Bar Graph",
+            width: 600,
+            height: 400,
+            bar: { groupWidth: "95%" },
+            legend: { position: "none" },
+        };
+        var chart = new google.visualization.BarChart(document.getElementById("my_dataviz2"));
+        chart.draw(view, options);
+    }
+</script>
+{% endblock %}

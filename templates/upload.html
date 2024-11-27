@@ -1,0 +1,230 @@
+{% extends "layout2.html" %}
+{% block body %}
+<style>
+    .file-upload {
+        width: 600px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    .file-upload-content {
+        display: none;
+        text-align: center;
+    }
+
+    .file-upload-input {
+        position: absolute;
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+        outline: none;
+        opacity: 0;
+        cursor: pointer;
+    }
+
+    .image-upload-wrap {
+        border: 4px dashed #4682b4;
+        position: relative;
+        color: black
+    }
+
+    .image-dropping,
+    .image-upload-wrap:hover {
+        background-color: rgb(233, 236, 239);
+        border: 4px dashed #4682b4;
+    }
+
+    .image-title-wrap {
+        padding: 0 15px 15px 15px;
+        color: #222;
+    }
+
+    .drag-text {
+        text-align: center;
+    }
+
+    .drag-text h3 {
+        font-weight: 100;
+        text-transform: uppercase;
+        color: black;
+        padding: 60px 0;
+    }
+
+    .file-upload-image {
+        max-height: 200px;
+        max-width: 200px;
+        margin: auto;
+        padding: 20px;
+    }
+
+    .remove-image {
+        width: 300px;
+        margin: 10px;
+        color: #fff;
+        background: #7aa6d3aa;
+        border: none;
+        padding: 10px;
+        border-radius: 4px;
+        transition: all .2s ease;
+        outline: none;
+        text-transform: uppercase;
+        font-weight: 700;
+    }
+
+    .remove-image:hover {
+        background: #7aa6d3;
+        color: #ffffff;
+        transition: all .2s ease;
+        cursor: pointer;
+    }
+
+    .remove-image:active {
+        border: 0;
+        transition: all .2s ease;
+    }
+
+    .loader-wrapper {
+        width: 60px;
+        height: 60px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader {
+        padding-top: 10%;
+        display: inline-block;
+        width: 50%;
+        height: 50%;
+        border: 4px solid #000080;
+        animation: loader 2s infinite ease alternate-reverse;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .loader-inner {
+        vertical-align: top;
+        display: inline-block;
+        width: 100%;
+        background-color: #7aa6d3;
+        animation: loader-inner 2s infinite ease-in alternate-reverse;
+    }
+
+    @keyframes loader {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        25% {
+            transform: rotate(180deg);
+        }
+
+        50% {
+            transform: rotate(180deg);
+        }
+
+        75% {
+            transform: rotate(360deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    @keyframes loader-inner {
+        0% {
+            height: 0%;
+        }
+
+        25% {
+            height: 0%;
+        }
+
+        50% {
+            height: 100%;
+        }
+
+        75% {
+            height: 100%;
+        }
+
+        100% {
+            height: 0%;
+        }
+    }
+</style>
+
+<div class="loader-wrapper">
+    <span class="loader"><span class="loader-inner"></span></span>
+</div>
+<div class=content id="content">
+    <form method="POST" action="http://localhost:5000/process" enctype=multipart/form-data>
+        <script class="jsbin" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+        <div class="file-upload">
+            <div class="image-upload-wrap">
+                <input class="file-upload-input" type='file' name="image" onchange="readURL(this);" accept="image/*" />
+                <div class="drag-text">
+                    <h3>Upload Bill</h3>
+                </div>
+            </div>
+            <div class="file-upload-content">
+                <img class="file-upload-image" src="#" alt="your image" />
+                <div class="image-title-wrap">
+                    <button type="button" onclick="removeUpload()" class="remove-image ">
+                        Remove <span class="image-title">Uploaded Image</span>
+                    </button>
+                    <input type="submit" value="submit" class="remove-image" onclick="loading()" />
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<script>
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                $('.image-upload-wrap').hide();
+
+                $('.file-upload-image').attr('src', e.target.result);
+                $('.file-upload-content').show();
+
+                $('.image-title').html(input.files[0].name);
+            };
+
+            reader.readAsDataURL(input.files[0]);
+
+        }
+        else {
+            removeUpload();
+        }
+    }
+
+    function removeUpload() {
+        $('.file-upload-input').replaceWith($('.file-upload-input').clone());
+        $('.file-upload-content').hide();
+        $('.image-upload-wrap').show();
+    }
+    $('.image-upload-wrap').bind('dragover', function () {
+        $('.image-upload-wrap').addClass('image-dropping');
+    });
+    $('.image-upload-wrap').bind('dragleave', function () {
+        $('.image-upload-wrap').removeClass('image-dropping');
+    });
+</script>
+<script type="text/javascript">
+    function loading() {
+        $(".loader-wrapper").show();
+        $("#content").hide();
+    }
+</script>
+
+{% endblock %}

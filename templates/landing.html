@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Expenditure Tracker</title>
+    <link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans:400,600" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+
+    <style>
+        html,
+        head,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        a {
+            color: white;
+            background-color: transparent;
+        }
+
+
+        .container {
+            position: relative;
+            text-align: center;
+            color: white;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 90%;
+        }
+
+        .centered {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+            color: white;
+            background-color: #12111188;
+            padding: 30px 20px;
+            border-radius: 30px;
+        }
+
+        .homePageTitle {
+            text-shadow: 1px 1px 2px black;
+        }
+
+        .loginSignup {
+            margin-top: 30px;
+            color: white !important;
+            font-size: 18px;
+        }
+
+        .homePageContent {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-direction: row;
+            margin-top: 50px;
+            font-family: 'IBM Plex Sans', sans-serif;
+        }
+
+        .homePageContentImage {
+            width: 30%;
+            height: 40%;
+        }
+
+        .homePageContentText {
+            width: 30%;
+            height: 40%;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <div style="position: relative; width: 100%; height: 100%;">
+        <!-- <div
+            style="position: absolute; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; z-index: 1;">
+            <lottie-player src="static/animation_ljyz8pue.json" background="transparent" speed="1" loop
+                style="width: 50%; height: 50%;" autoplay></lottie-player>
+        </div> -->
+
+        <div style="width: 100%; height: 100%; z-index: 10000;">
+            <img src="static/images/555.jpg" alt="home" class="container" />
+            <div class="centered">
+                <div class="homePageTitle">
+                    <h1>Expenditure Tracker</h1>
+                    
+                </div>
+                <div class="loginSignup">
+                    <div><a class="login" href="{{ url_for('login') }}">Already have an account: Log In</a></div>
+                    <div><a class="signup" href="{{ url_for('register') }}">Create new account: Sign Up</a></div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="homePageContent">
+                    <img class="homePageContentImage" src="static/images/homePageimage1.jpg" />
+                    <h5 class="homePageContentText">To effectively manage your expenses, you can leverage our website's
+                        features to get your categorized bills and streamline your financial management. Our platform
+                        allows you to create a budget, track your expenses, and categorize your bills conveniently.</h5>
+                </div>
+
+                <div class="homePageContent">
+                    <h5 class="homePageContentText">With our user-friendly interface and powerful tools, you can gain
+                        better control over your finances and make informed decisions about your spending. Start
+                        organizing your bills and managing your expenses today with our website's comprehensive suite of
+                        financial management features.</h5>
+                    <img class="homePageContentImage" src="static/images/homePageimage2.jpg" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+</body>
+
+</html>
